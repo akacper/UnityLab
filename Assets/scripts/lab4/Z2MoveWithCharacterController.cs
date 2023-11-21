@@ -1,3 +1,8 @@
+// Stwórz nową scenę i zbuduj w niej testowy poziom wykorzystując ProBuilder.
+// Stwórz podejścia o różnym kącie nachylenia, schody i ściany. Dodaj dowolny
+// model postaci (może to być dość prosta bryła) i wykorzystaj przykładową
+// implementację ruchu z wykorzystaniem CharacterController z dokumentacji Unity.
+// Przetestuj poziom (aktualnie ustawiając kamerę tak, żeby obejmowała cały poziom) i ewentualnie dostosuj parametry komponentu jeżeli nie można pokonać niektórych przeszkód (wzniesienia, schody).
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,13 +30,15 @@ public class MoveWithCharacterController : MonoBehaviour
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer)
-        {
-            lastTimeGrounded = Time.time; // Update the last time the player was grounded
+        { 
+            // Update last time player was grounded
+            lastTimeGrounded = Time.time;
             playerVelocity.y = 0f;
         }
         else if (Time.time - lastTimeGrounded < groundCheckDelay)
         {
-            groundedPlayer = true; // Consider the player grounded within a short time after leaving the ground
+            // Consider grounded short time after leaving the ground
+            groundedPlayer = true;
         }
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
@@ -44,5 +51,17 @@ public class MoveWithCharacterController : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+    bool IsGrounded()
+    {
+        return controller.isGrounded;
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+        if (collision.CompareTag("Obstacle"))
+        {
+            Debug.Log("Wykryto dotkniecie przeszkody (skrypt gracza)");
+        }
     }
 }

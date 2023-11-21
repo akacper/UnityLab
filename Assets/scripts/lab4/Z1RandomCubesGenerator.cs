@@ -1,3 +1,9 @@
+// Wykorzystaj kod z listingu 1 i zmodyfikuj go tak, aby możliwe było:
+// określenie w inspektorze ilości obiektów losowych do wegenerowania,
+// pozycje x oraz z były pobierane adekwatnie dla obiektu platformy,
+//  do której skrypt jest dołączany (zakładamy, że tak będzie),
+// dodaj do swojego projektu nowe materiały, tak, aby było 5 różnych
+// do wykorzystania i przydzielaj losowo materiał w trakcie tworzenia nowego obiektu.
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -55,7 +61,7 @@ public class RandomCubesGenerator : MonoBehaviour
                 Material randomMaterial = materials[UnityEngine.Random.Range(0, materials.Length)];
                 // Get the Mesh Renderer component of cube
                 MeshRenderer cubeRenderer = cube.GetComponent<MeshRenderer>();
-                // Apply random material to the cube
+                // Apply random material
                 cubeRenderer.material = randomMaterial;
             }
             else
